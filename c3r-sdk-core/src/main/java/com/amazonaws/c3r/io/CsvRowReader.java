@@ -218,7 +218,7 @@ public final class CsvRowReader extends RowReader<CsvValue> {
         } else if (inputNullValue.isBlank()) {
             state.csvParserSettings.setNullValue(null);
             state.csvParserSettings.setEmptyValue("");
-        } else if (inputNullValue.trim().equals("\"\"")) {
+        } else if ("\"\"".equals(inputNullValue.trim())) {
             state.csvParserSettings.setNullValue("");
             state.csvParserSettings.setEmptyValue(null);
         } else {

@@ -141,8 +141,8 @@ public abstract class SparkCsvReader {
             throw new C3rRuntimeException("A `path` must be provided when reading.");
         }
         final boolean skipHeaderNormalization =
-                properties.getOrDefault(SparkConfig.PROPERTY_KEY_SKIP_HEADER_NORMALIZATION, "false")
-                        .equalsIgnoreCase("true");
+                "true"
+                        .equalsIgnoreCase(properties.getOrDefault(SparkConfig.PROPERTY_KEY_SKIP_HEADER_NORMALIZATION, "false"));
         final String source = properties.get("path");
         final String inputNullValue = properties.get("inputNullValue");
         final List<ColumnHeader> externalHeaders = properties.get("headers") == null ?
