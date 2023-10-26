@@ -8,6 +8,7 @@ import com.amazonaws.c3r.config.ColumnSchema;
 import com.amazonaws.c3r.config.TableSchema;
 import com.amazonaws.c3r.exception.C3rRuntimeException;
 import com.amazonaws.c3r.utils.FileUtil;
+import java.nio.file.Files;
 import lombok.NonNull;
 
 import java.io.File;
@@ -71,7 +72,7 @@ public abstract class TableGenerator {
      */
     static File initTableFile(@NonNull final String tempDir) {
         try {
-            final File tempDbFile = File.createTempFile("c3rTmp", ".db", new File(tempDir));
+            final File tempDbFile = Files.createTempFile(new File(tempDir).toPath(), "c3rTmp", ".db").toFile();
             // Set 600 file permissions
             FileUtil.setOwnerReadWriteOnlyPermissions(tempDbFile);
             // Ensure file is cleaned up when JVM is closed.
