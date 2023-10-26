@@ -19,6 +19,7 @@ import com.amazonaws.c3r.internal.Limits;
 import com.amazonaws.c3r.internal.PadUtil;
 import com.amazonaws.c3r.json.GsonUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.pixee.security.BoundedLineReader;
 import lombok.Builder;
 import lombok.NonNull;
 
@@ -219,7 +220,7 @@ public final class InteractiveSchemaGenerator {
      */
     private String readNextLineLowercase() {
         try {
-            final String nextLine = consoleInput.readLine();
+            final String nextLine = BoundedLineReader.readLine(consoleInput, 5_000_000);
             if (nextLine == null) {
                 throw new C3rRuntimeException("Unexpected end of user input.");
             }
@@ -411,7 +412,7 @@ public final class InteractiveSchemaGenerator {
         try {
             // We intentionally do not use readNextLineLowercase() here so that we can check if the
             // string was normalized and report it to the user for their awareness (see below).
-            input = consoleInput.readLine();
+            input = BoundedLineReader.readLine(consoleInput, 5_000_000);
             if (input != null && input.isBlank() && sourceHeader != null) {
                 consoleOutput.println("Using default name `" + sourceHeader + "`.");
                 targetHeader = sourceHeader;
